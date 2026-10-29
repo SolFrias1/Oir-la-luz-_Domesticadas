@@ -12,7 +12,7 @@ Desarrollada para el curso *Dispositivos periféricos y plataformas para la inte
 
 ## 1. Concepto y Relación Imagen–Sonido
 
-### ¿Qué relación propones y por qué?
+### ¿Qué relación se propone y por qué?
 La plataforma propone una relación de **contraste crítico y traducción somática**. 
 
 El ser humano moderno suele percibirse a sí mismo como un ser emancipado de la naturaleza: domesticó plantas y animales, construyó ciudades y se declaró libre de los instintos biológicos básicos. Sin embargo, esta plataforma plantea la hipótesis contraria: **hemos reemplazado la jaula de madera y alambre por jaulas invisibles de lenguaje, juicio social, vigilancia cotidiana y murmuración.**
@@ -20,7 +20,7 @@ El ser humano moderno suele percibirse a sí mismo como un ser emancipado de la 
 Al observar el corral, el espectador espera oír el cacareo instintivo de las gallinas. En su lugar, el sistema hace que las aves hablen con fragmentos de chismes, susurros y confesiones cotidianas humanas en español (`gossipesp.wav`). El animal domesticado adquiere la voz de su carcelero; los chismes humanos —esa manifestación puramente social de control de masas y pérdida de libertad— emergen de los cuerpos de las aves cautivas.
 
 ### ¿Qué queremos que la persona escuche que antes no escuchaba?
-Queremos que el usuario escuche **la domesticación humana reflejada en el confinamiento animal**. Al interactuar con la plataforma, el usuario descubre que su propio cursor no es inocente: funciona como el **ojo panóptico**, la mirada invasora del ser humano que perturba el corral y fuerza a las aves a confesar sus secretos. Detrás del bullicio de los chismes humanos se percibe, además, un paisaje sonoro de grillos y pájaros libres que se asfixia y apaga a medida que la actividad humana se intensifica.
+Aquí se busca que el usuario escuche **la domesticación humana reflejada en el confinamiento animal**. Al interactuar con la plataforma; el usuario descubre que su propio cursor no es inocente: funciona como el **ojo panóptico**, la mirada invasora del ser humano que perturba el corral y fuerza a las aves a confesar sus secretos. Detrás del bullicio de los chismes humanos se percibe, además, un paisaje sonoro de grillos y pájaros libres que se asfixia y apaga a medida que la actividad humana se intensifica.
 
 ```
 corral (video) → ojo / cursor (mouse) → píxel (inquietud) → regla (mapping) → confesión humana (sonido)
