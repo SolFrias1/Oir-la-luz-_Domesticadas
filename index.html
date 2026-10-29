@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Domesticadas · La Ilusión de la Libertad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="bar bar-top">
+  <span>Dispositivos Periféricos · Ejercicio 06</span>
+  <span class="grow chain" id="chain">corral → ojo / cursor → píxel → <b>inquietud</b> → gallina → chisme humano</span>
+  <button type="button" class="neon" id="soundBtn" aria-pressed="false">▶ Activar sonido</button>
+  <button type="button" id="fsBtn">⛶ Pantalla completa</button>
+</div>
+
+<main class="stage" id="stage">
+  <div class="screen">
+  <canvas id="view"></canvas>
+  <div class="manifesto" id="manifesto">
+    <div class="manifesto-header">
+      <h1>domesticadas</h1>
+      <button type="button" id="toggleManifesto" class="btn-subtle" title="Minimizar / Expandir reflexión">_</button>
+    </div>
+    <p class="subtitle">La ilusión de la libertad · Crónica de una catarsis</p>
+    <div class="reflection-body" id="reflectionBody">
+      <p class="reflection-text">
+        Nos concebimos como seres emancipados de la naturaleza tras domesticar a otros animales, pero hemos construido nuestro propio corral invisible: nos domesticamos y vigilamos mutuamente a través del chisme, el juicio ajeno y la mirada cotidiana.
+      </p>
+      <div class="reflection-cue">
+        <span class="cue-dot">●</span> <b>Pasa el cursor sobre las gallinas</b> para elevar el volumen de la conversación humana que habita en el encierro.
+      </div>
+    </div>
+  </div>
+
+  <div class="readout" aria-live="polite">
+    <div class="voice-meter">
+      <div class="voice-meter-label"><span>Voz humana (gossipesp)</span><span id="gossipVolPct">0%</span></div>
+      <div class="voice-meter-bar"><div class="voice-meter-fill" id="gossipFill" style="width:0%"></div></div>
+    </div>
+    <div class="note" id="lastNote">—</div>
+    <div><span class="lbl">estado </span><span class="val" id="lastHz">acerca el cursor</span> <span class="lbl" id="lblZone"> · celda </span><span class="val" id="lastZone">—</span> <span class="lbl" id="lblPct"> · proximidad </span><span class="val" id="lastPct">0%</span></div>
+    <div class="rule" id="mapText">cursor sobre gallinas → sube el volumen de gossipesp.wav</div>
+  </div>
+  <div class="toast" id="toast" hidden></div>
+  </div>
+
+  <nav class="dock" id="dock" aria-label="Parámetros">
+    <div>
+      <button type="button" class="trigger" aria-expanded="false" data-panel="pMode"><span><span class="num">01</span>Modo</span><span class="state" id="stMode">corral</span></button>
+      <div class="panel" id="pMode" hidden>
+        <div class="panel-bar"><span>01 · Modo de Interacción</span><button type="button" data-close>Cerrar</button></div>
+        <div class="seg seg4" role="group" aria-label="Modo">
+          <button type="button" data-mode="zonas" aria-pressed="true">Corral</button>
+          <button type="button" data-mode="libre" aria-pressed="false">Libre</button>
+          <button type="button" data-mode="linea" aria-pressed="false">Faena</button>
+          <button type="button" data-mode="escaner" aria-pressed="false">Panóptico</button>
+        </div>
+        <p class="hint" id="modeHint">En modo Corral, las gallinas confiesan secretos humanos cuando el cursor las toca o pasa sobre ellas.</p>
+        <div class="row" data-show="zonas"><label for="cRad">Radio cursor</label><input type="range" id="cRad" min="4" max="35" step="1" value="15"><output id="cRadOut">15 %</output></div>
+        <div class="row" data-show="linea"><label for="lx">Posición</label><input type="range" id="lx" min="5" max="95" step="1" value="50"><output id="lxOut">50 %</output></div>
+        <div class="row" data-show="linea lineas escaner"><label for="segs">Tramos</label><input type="range" id="segs" min="3" max="16" step="1" value="8"><output id="segsOut">8</output></div>
+        <div class="row" data-show="escaner"><label for="sdur">Vuelta</label><input type="range" id="sdur" min="2" max="20" step="1" value="6"><output id="sdurOut">6 s</output></div>
+        <div class="row" data-show="escaner"><label for="steps">Pasos</label><input type="range" id="steps" min="8" max="32" step="1" value="16"><output id="stepsOut">16</output></div>
+        <div class="row" data-show="escaner"><label for="bright">Brillo mín.</label><input type="range" id="bright" min="30" max="240" step="1" value="90"><output id="brightOut">90</output></div>
+        <div class="checks" data-show="zonas libre">
+          <label><input type="checkbox" id="cursorHalo" checked> halo visible del ojo invasor (cursor)</label>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button type="button" class="trigger" aria-expanded="false" data-panel="pVis"><span><span class="num">02</span>Visualización</span><span class="state" id="stVis">sutil</span></button>
+      <div class="panel" id="pVis" hidden>
+        <div class="panel-bar"><span>02 · Visualización</span><button type="button" data-close>Cerrar</button></div>
+        <div class="seg" role="group" aria-label="Fondo">
+          <button type="button" data-view="mix" aria-pressed="true">Corral</button>
+          <button type="button" data-view="mask" aria-pressed="false">Máquina</button>
+        </div>
+        <p class="hint">Máquina muestra únicamente la máscara de píxeles en movimiento: la vigilancia biológica pura.</p>
+        <div class="row"><label for="tint">Tono ámbar</label><input type="range" id="tint" min="0" max="60" step="1" value="26"><output id="tintOut">26 %</output></div>
+        <div class="row"><label for="veil">Oscurecer</label><input type="range" id="veil" min="0" max="70" step="1" value="0"><output id="veilOut">0 %</output></div>
+        <p class="hint">Líneas de la grilla, notas y partículas de agitación se controlan desde la barra inferior.</p>
+      </div>
+    </div>
+    <div>
+      <button type="button" class="trigger" aria-expanded="false" data-panel="pKeys"><span><span class="num">03</span>Panóptico</span><span class="state" id="stKeys">10 × 6</span></button>
+      <div class="panel" id="pKeys" hidden>
+        <div class="panel-bar"><span>03 · Grilla Panóptica</span><button type="button" data-close>Cerrar</button></div>
+        <div class="row"><label for="cols">Columnas</label><input type="range" id="cols" min="4" max="20" step="1" value="10"><output id="colsOut">10</output></div>
+        <div class="row"><label for="rows">Filas</label><input type="range" id="rows" min="2" max="10" step="1" value="6"><output id="rowsOut">6</output></div>
+        <div class="row two"><label for="scale">Escala</label>
+          <select id="scale"><option value="pmin" selected>Pentatónica menor (drama)</option><option value="pmaj">Pentatónica mayor</option><option value="maj">Mayor</option><option value="chr">Cromática</option></select></div>
+        <div class="row two"><label for="root">Tono base</label>
+          <select id="root"><option value="45">La2 · 110 Hz</option><option value="48" selected>Do3 · 131 Hz</option><option value="55">Sol3 · 196 Hz</option><option value="60">Do4 · 262 Hz</option></select></div>
+        <p class="hint">Una mayor cantidad de celdas incrementa la resolución espacial de la vigilancia sobre cada gallina.</p>
+      </div>
+    </div>
+    <div>
+      <button type="button" class="trigger" aria-expanded="false" data-panel="pDet"><span><span class="num">04</span>Detección</span><span class="state" id="stDet">3 %</span></button>
+      <div class="panel" id="pDet" hidden>
+        <div class="panel-bar"><span>04 · Detección de Inquietud</span><button type="button" data-close>Cerrar</button></div>
+        <div class="row"><label for="thr">Umbral píxel</label><input type="range" id="thr" min="8" max="80" step="1" value="24"><output id="thrOut">24</output></div>
+        <div class="row"><label for="sens">Sensibilidad</label><input type="range" id="sens" min="1" max="40" step="1" value="3"><output id="sensOut">3 %</output></div>
+        <div class="row"><label for="cool">Repetición</label><input type="range" id="cool" min="60" max="1200" step="20" value="280"><output id="coolOut">280 ms</output></div>
+        <p class="hint">Calcula la diferencia de fotogramas del video en tiempo real. Si el cambio supera la sensibilidad, la gallina expresa un sonido.</p>
+      </div>
+    </div>
+    <div>
+      <button type="button" class="trigger" aria-expanded="false" data-panel="pSnd"><span><span class="num">05</span>Sonoro</span><span class="state" id="stSnd">voces</span></button>
+      <div class="panel" id="pSnd" hidden>
+        <div class="panel-bar"><span>05 · Banco Sonoro & Capas</span><button type="button" data-close>Cerrar</button></div>
+        <div class="seg" role="group" aria-label="Fuente sonora">
+          <button type="button" id="sndModeBanco" aria-pressed="true">Voces (Banco)</button>
+          <button type="button" id="sndModeSynth" aria-pressed="false">Sintetizador</button>
+        </div>
+        <p class="hint">Voces reproduce las grabaciones de chismes en español, susurros fantasmales, piano y naturaleza.</p>
+        <div class="row"><label for="pRate">Vel. habla</label><input type="range" id="pRate" min="50" max="160" step="5" value="100"><output id="pRateOut">1.00x</output></div>
+        <div class="row"><label for="vChisme">Chismes</label><input type="range" id="vChisme" min="0" max="100" step="1" value="85"><output id="vChismeOut">85 %</output></div>
+        <div class="row"><label for="vFantasma">Fantasmas</label><input type="range" id="vFantasma" min="0" max="100" step="1" value="50"><output id="vFantasmaOut">50 %</output></div>
+        <div class="row"><label for="vPiano">Piano</label><input type="range" id="vPiano" min="0" max="100" step="1" value="65"><output id="vPianoOut">65 %</output></div>
+        <div class="row"><label for="vNat">Naturaleza</label><input type="range" id="vNat" min="0" max="100" step="1" value="45"><output id="vNatOut">45 %</output></div>
+        <p class="hint">Naturaleza reproduce el loop de grillos y pájaros libres en segundo plano, ahogándose ante la masa de chismes.</p>
+      </div>
+    </div>
+    <div>
+      <button type="button" class="trigger" aria-expanded="false" data-panel="pMap"><span><span class="num">06</span>Espacio</span><span class="state" id="stMap">galpón</span></button>
+      <div class="panel" id="pMap" hidden>
+        <div class="panel-bar"><span>06 · Espacio & Galpón</span><button type="button" data-close>Cerrar</button></div>
+        <div class="row"><label for="cut">Asfixia / Filtro</label><input type="range" id="cut" min="200" max="12000" step="10" value="3800"><output id="cutOut">3.8k</output></div>
+        <div class="row"><label for="rev">Resonancia</label><input type="range" id="rev" min="0" max="100" step="1" value="35"><output id="revOut">35 %</output></div>
+        <div class="row"><label for="vol">Vol. maestro</label><input type="range" id="vol" min="0" max="100" step="1" value="70"><output id="volOut">70 %</output></div>
+        <div class="checks">
+          <label><input type="checkbox" id="mapPan" checked> espacialización estéreo (pan según posición de la gallina)</label>
+          <label><input type="checkbox" id="mapVel" checked> intensidad del movimiento → volumen</label>
+          <label><input type="checkbox" id="mirror" checked> espejo (para uso con cámara)</label>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button type="button" class="trigger" aria-expanded="false" data-panel="pRec"><span><span class="num">07</span>Grabar</span><span class="state" id="stRec">—</span></button>
+      <div class="panel" id="pRec" hidden>
+        <div class="panel-bar"><span>07 · Grabar y Descargar</span><button type="button" data-close>Cerrar</button></div>
+        <div class="btnrow">
+          <button type="button" class="rec" id="recBtn" aria-pressed="false">● Grabar</button>
+          <span class="mono" id="recTime">0:00</span>
+          <button type="button" id="recDl" disabled>Descargar sesión</button>
+        </div>
+        <div class="btnrow"><button type="button" id="noteDl" disabled>Descargar última confesión</button></div>
+        <p class="hint" id="recHint">Graba la catarsis en tiempo real y descárgala en formato WAV de alta fidelidad.</p>
+      </div>
+    </div>
+    <div>
+      <button type="button" class="trigger" aria-expanded="false" data-panel="pMidi"><span><span class="num">08</span>MIDI</span><span class="state" id="stMidi">sin conectar</span></button>
+      <div class="panel" id="pMidi" hidden>
+        <div class="panel-bar"><span>08 · Controlador MIDI</span><button type="button" data-close>Cerrar</button></div>
+        <div class="btnrow">
+          <button type="button" id="midiBtn">Conectar MIDI</button>
+          <button type="button" id="learnBtn" aria-pressed="false" disabled>Asignar</button>
+          <button type="button" id="midiClear" disabled>Borrar</button>
+        </div>
+        <p class="hint" id="midiHint">Conecta un controlador físico para modular perillas de asfixia, resonancia o velocidad de habla.</p>
+      </div>
+    </div>
+  </nav>
+
+  <section class="signal" id="signal" aria-label="Señal">
+    <div class="signal-bar"><span>09 · Señal Acústica</span><button type="button" id="sigHide" style="border:0;padding:0 2px;color:var(--gray-2)">Ocultar</button></div>
+    <div class="signal-body">
+      <div class="cap"><span id="scopeCap">onda acústica de la voz</span><span id="specCap">espectro</span></div>
+      <canvas id="scope" style="height:76px"></canvas>
+      <div class="cap"><span id="envCapL">envolvente</span><span id="envCapR">asfixia · resonancia</span></div>
+      <canvas id="env" style="height:64px"></canvas>
+      <div class="cap"><span>partitura del corral · 10 s</span><span>altura / frase × tiempo</span></div>
+      <canvas id="roll"></canvas>
+    </div>
+  </section>
+</main>
+
+<div class="bar bar-bottom">
+  <div class="group-inline seg" role="group" aria-label="Fuente">
+    <button type="button" id="srcFile" aria-pressed="true">Corral</button>
+    <button type="button" id="srcDemo" aria-pressed="false">Ejemplo</button>
+    <button type="button" id="srcCam" aria-pressed="false">Cámara</button>
+  </div>
+  <div class="group-inline" id="camCtx" hidden><button type="button" id="camOff">Apagar cámara</button></div>
+  <div class="group-inline" id="vidCtx">
+    <button type="button" id="vPlay">▶ Play</button><button type="button" id="vPause">❚❚ Pausa</button>
+    <button type="button" id="vLoop" aria-pressed="true">⟲ Loop</button><button type="button" id="vChange">Cambiar</button>
+  </div>
+  <input type="file" id="fileInput" accept="video/*" hidden>
+  <span class="grow"></span>
+  <span class="mono" id="recBadge" hidden><span class="rec-dot">●</span> REC <span id="recBadgeT">0:00</span></span>
+  <div class="group-inline" role="group" aria-label="Capas">
+    <button type="button" class="toggle" id="tLines" aria-pressed="true">Grilla</button>
+    <button type="button" class="toggle" id="tNotes" aria-pressed="true">Voces</button>
+    <button type="button" class="toggle" id="tParts" aria-pressed="true">Inquietud</button>
+    <button type="button" class="toggle" id="tSignal" aria-pressed="true">Señal</button>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
+
