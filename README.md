@@ -133,16 +133,3 @@ Luego abre en Chrome o Edge:
 `http://localhost:8123`
 
 Haz clic en el botón superior **▶ Activar sonido** para iniciar la reproducción sonora.
-
-### 2. Publicación en GitHub Pages
-1. Sube los archivos a tu repositorio de GitHub:
-   ```bash
-   git init
-   git add .
-   git commit -m "Entrega Ejercicio 06 - Plataforma Domesticadas"
-   git branch -M main
-   git remote add origin https://github.com/TU_USUARIO/TU_REPOSITORIO.git
-   git push -u origin main
-   ```
-2. En GitHub, ve a **Settings** → **Pages** → **Deploy from a branch** → selecciona `main` y `/ (root)` → **Save**.
-3. En unos minutos estará disponible en `https://TU_USUARIO.github.io/TU_REPOSITORIO/`.
