@@ -4,7 +4,7 @@
 
 Desarrollada para el curso *Dispositivos periféricos y plataformas para la interacción digital* (DPPI, Escuela de Diseño UDP), como entrega del **Ejercicio 06**.
 
-- **Enlace de publicación:** [https://paulafrias.github.io/oir-la-luz/](https://paulafrias.github.io/oir-la-luz/) (o el subdirectorio de tu repositorio de GitHub Pages).
+- **Enlace de publicación:** [https://solfrias1.github.io/Oir-la-luz-_Domesticadas/](https://solfrias1.github.io/Oir-la-luz-_Domesticadas/)
 - **Video predeterminado:** `videos/granja_web.mp4` (versión optimizada en 540p H.264 para carga instantánea en web).
 - **Banco sonoro:** 12 grabaciones WAV procesadas con compresión dinámica y ecualización vocal en la carpeta `sonidos/`.
 
